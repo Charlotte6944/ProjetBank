@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet"/>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Hello Home!</h1>
+
+    <h3>Votre salaire actuel</h3>
+    <p><span data-th-text="${salary.getAmount()}"></span> €</p>
+
+    <h3>Votre solde:</h3>
+    <p><span data-th-text="${soldeTransaction}"></span> €</p>
+
+
+    <br>
+    <table class="table">
+        <thead>
+            <tr>Charges régulières</tr>
+            <th>Title</th>
+            <th>Amount</th>
+        </thead>
+        <tbody>
+            <tr data-th-each="debit: ${debits}">
+                <td><span data-th-text="${debit.title}"></span></td>
+                <td><span data-th-text="${debit.amount}"></span> €</td>
+                <td><span data-th-text="${debit.regular} ? 'Dep courante' : 'Dep exceptionnelle'"></span></td>
+                <td>
+                    <a th:href="@{/debitAction(debitId=${debit.id})}">Supprimer</a>
+                </td>
+                <!-- <td><input type="submit" th:value="Supprimer"/></td> -->
+            <!-- <input type="text" name="title" th:value="${debit.title}">
+            <input type="text" name="amount" th:value="${debit.amount}"> -->
+            </tr>
+        </tbody>
+        <thead></thead>
+    </table>
+
+    <h3>Ajouter un débit</h3>
+    <form action="#" data-th-action="@{/addDebit}" data-th-object="${formDebit}" method="post">
+        <label data-th-field="*{title}">Titre</label>
+        <input type="text" data-th-field="*{title}"/>
+        <label data-th-field="*{amount}">Montant</label>
+        <input type="text" data-th-field="*{amount}"/>
+        <label data-th-field="*{regular}">Vide: dépense exceptionnelle</label>
+        <input type="checkbox" name="regular" data-th-checked="${regular}"/>
+        <input type="submit" value="Ajouter débit"/>
+    </form>
+
+</body>
+</html>
